@@ -1,0 +1,36 @@
+# render.yaml — Render Blueprint (optional but makes setup 1-click)
+# You can also configure everything manually in the Render dashboard.
+
+services:
+  - type: worker          # Background Worker — never sleeps on free tier
+    name: mc-afk-bot
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+
+    envVars:
+      - key: MC_HOST
+        value: your.server.ip        # ← CHANGE to your server IP
+      - key: MC_PORT
+        value: "25565"
+      - key: MC_USER
+        value: AFKBot                # ← CHANGE to your desired bot username
+      - key: MC_AUTH
+        value: offline
+      - key: MC_VER
+        value: "1.21.1"
+      - key: COMPASS_SLOT
+        value: "4"                   # hotbar slot 5 in-game = index 4
+      - key: GUI_SLOT
+        value: "21"                  # chest GUI slot to click
+      - key: LOBBY_WAIT_MS
+        value: "5000"
+      - key: ACTION_DELAY_MS
+        value: "1500"
+      - key: IDLE_INTERVAL_MS
+        value: "25000"
+      - key: LOG_LEVEL
+        value: info
+      - key: MAX_RECONNECT
+        value: "50"
