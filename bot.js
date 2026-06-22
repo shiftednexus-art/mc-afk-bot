@@ -136,12 +136,32 @@ function stopAntiAfk() {
 
 // ─── Chat listener (login plugin support) ────────────────────────────────────
 function onChat(username, message) {
-  // If the server has AuthMe or similar:
-  // bot.chat('/login yourpassword')
-  // Uncomment and edit the line above if your server needs it.
+  const msg = String(message).toLowerCase();
+
+  if (
+    msg.includes('/register') ||
+    msg.includes('register using') ||
+    msg.includes('please register')
+  ) {
+    if (config.password) {
+      bot.chat(`/register ${config.password} ${config.password}`);
+      logger.info('Sent register command');
+    }
+  }
+
+  if (
+    msg.includes('/login') ||
+    msg.includes('please login') ||
+    msg.includes('log in using')
+  ) {
+    if (config.password) {
+      bot.chat(`/login ${config.password}`);
+      logger.info('Sent login command');
+    }
+  }
+
   logger.debug(`[CHAT] <${username}> ${message}`);
 }
-
 // ─── Disconnect handlers ──────────────────────────────────────────────────────
 function onKicked(reason) {
   logger.warn('Kicked: ' + (typeof reason === 'object' ? JSON.stringify(reason) : reason));
